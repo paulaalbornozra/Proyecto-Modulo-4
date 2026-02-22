@@ -1,0 +1,422 @@
+/* ============================================================
+   TASKFLOW — style.css
+   Estilo: Editorial oscuro, tipografía refinada, acentos teal
+   ============================================================ */
+
+:root {
+  --bg:          #0a0a0f;
+  --bg-panel:    #101018;
+  --bg-card:     #14141e;
+  --bg-hover:    #1a1a28;
+  --borde:       rgba(255,255,255,0.06);
+  --borde-hover: rgba(255,255,255,0.14);
+  --teal:        #2dd4bf;
+  --teal-dim:    rgba(45,212,191,0.15);
+  --teal-glow:   rgba(45,212,191,0.4);
+  --verde:       #34d399;
+  --rojo:        #f87171;
+  --amarillo:    #fbbf24;
+  --texto:       #e2e8f0;
+  --texto-dim:   #64748b;
+  --texto-muted: #334155;
+  --radio:       8px;
+}
+
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--texto);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Fondo con grid sutil ─────────────────────────────── */
+.bg-grid {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(45,212,191,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(45,212,191,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ══ TOPBAR ═══════════════════════════════════════════════ */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 2rem;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--borde);
+}
+
+.topbar-brand { display: flex; align-items: center; gap: 10px; }
+
+.brand-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--teal);
+  box-shadow: 0 0 12px var(--teal-glow);
+  animation: pulseDot 2s ease-in-out infinite;
+}
+@keyframes pulseDot {
+  0%,100% { box-shadow: 0 0 8px var(--teal-glow); }
+  50%      { box-shadow: 0 0 20px var(--teal-glow), 0 0 40px rgba(45,212,191,0.2); }
+}
+
+.brand-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.2rem; letter-spacing: 1px; color: var(--texto);
+}
+
+.topbar-stats { display: flex; gap: 8px; }
+
+.stat-chip {
+  display: flex; align-items: center; gap: 6px;
+  padding: 4px 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--borde);
+  border-radius: 50px;
+  font-size: 0.78rem; font-weight: 500;
+  transition: border-color 0.2s;
+}
+.stat-chip:hover { border-color: var(--borde-hover); }
+
+.stat-num { font-weight: 700; color: var(--teal); }
+.stat-lbl { color: var(--texto-dim); font-size: 0.72rem; }
+
+.chip-verde .stat-num { color: var(--verde); }
+.chip-rojo  .stat-num { color: var(--rojo); }
+
+.topbar-reloj {
+  font-family: 'DM Serif Display', serif;
+  font-size: 0.9rem; letter-spacing: 2px;
+  color: var(--texto-dim);
+}
+
+/* ══ LAYOUT 2 COLUMNAS ════════════════════════════════════ */
+.layout {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 0;
+  min-height: calc(100vh - 53px);
+}
+
+/* ══ PANEL IZQUIERDO ══════════════════════════════════════ */
+.panel-form {
+  border-right: 1px solid var(--borde);
+  padding: 2rem 1.5rem;
+  display: flex; flex-direction: column; gap: 1.5rem;
+  background: var(--bg-panel);
+  position: sticky; top: 53px; height: calc(100vh - 53px);
+  overflow-y: auto;
+}
+
+.panel-titulo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.1rem; font-weight: 400;
+  color: var(--texto); letter-spacing: 0.3px;
+}
+
+/* ── Formulario ───────────────────────────────────────── */
+.formulario { display: flex; flex-direction: column; gap: 1rem; }
+
+.campo { display: flex; flex-direction: column; gap: 6px; }
+
+.campo-label {
+  font-size: 0.72rem; font-weight: 700;
+  color: var(--texto-dim); letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.campo-input {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 10px 14px;
+  color: var(--texto);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  resize: none;
+}
+.campo-input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px var(--teal-dim);
+}
+.campo-input::placeholder { color: var(--texto-muted); }
+
+.textarea { min-height: 80px; }
+
+.char-counter {
+  font-size: 0.68rem; color: var(--texto-muted);
+  text-align: right; margin-top: 2px;
+  transition: color 0.2s;
+}
+.char-counter.alerta { color: var(--rojo); }
+
+/* Botón principal */
+.btn-agregar {
+  width: 100%; padding: 12px;
+  background: var(--teal);
+  border: none; border-radius: var(--radio);
+  color: #000; font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem; font-weight: 700; cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 14px var(--teal-dim);
+}
+.btn-agregar:hover {
+  background: #5eead4;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px var(--teal-glow);
+}
+.btn-agregar:active { transform: translateY(1px); }
+.btn-agregar:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+/* Separador */
+.separador {
+  height: 1px; background: var(--borde); margin: 0 -1.5rem;
+}
+
+/* Acciones API */
+.acciones-api { display: flex; flex-direction: column; gap: 8px; }
+
+.acciones-titulo {
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 1.5px; color: var(--texto-dim);
+  text-transform: uppercase; margin-bottom: 4px;
+}
+
+.btn-api {
+  width: 100%; padding: 9px 14px;
+  background: var(--teal);
+  border: none; border-radius: var(--radio);
+  color: #000; font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem; font-weight: 700; cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-api:hover { background: #5eead4; transform: translateY(-1px); }
+
+.btn-api-outline {
+  background: transparent;
+  border: 1px solid var(--borde);
+  color: var(--texto);
+}
+.btn-api-outline:hover {
+  background: var(--bg-hover);
+  border-color: var(--borde-hover);
+  transform: translateY(-1px);
+}
+
+.btn-api-danger {
+  background: transparent;
+  border: 1px solid rgba(248,113,113,0.2);
+  color: var(--rojo);
+}
+.btn-api-danger:hover {
+  background: rgba(248,113,113,0.08);
+  border-color: var(--rojo);
+  transform: translateY(-1px);
+}
+
+/* ══ PANEL DERECHO ════════════════════════════════════════ */
+.panel-lista {
+  padding: 2rem;
+  display: flex; flex-direction: column; gap: 1.5rem;
+  position: relative;
+}
+
+/* ── Barra de filtros ─────────────────────────────────── */
+.filtros-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+}
+.filtros-chips { display: flex; gap: 6px; }
+
+.filtro-chip {
+  padding: 6px 16px;
+  background: transparent;
+  border: 1px solid var(--borde);
+  border-radius: 50px;
+  color: var(--texto-dim);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem; font-weight: 500; cursor: pointer;
+  transition: all 0.15s;
+}
+.filtro-chip:hover { border-color: var(--borde-hover); color: var(--texto); }
+.filtro-chip.activo {
+  background: var(--teal-dim);
+  border-color: var(--teal);
+  color: var(--teal);
+}
+
+/* ── Notificación flotante ────────────────────────────── */
+.notificacion {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 18px;
+  background: var(--bg-card);
+  border: 1px solid var(--teal);
+  border-left: 3px solid var(--teal);
+  border-radius: var(--radio);
+  font-size: 0.85rem; font-weight: 500;
+  color: var(--teal);
+  animation: slideIn 0.3s ease-out;
+  box-shadow: 0 4px 20px rgba(45,212,191,0.15);
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Estado vacío ─────────────────────────────────────── */
+.estado-vacio {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 1rem;
+  padding: 5rem 2rem; text-align: center;
+}
+.vacio-icono { font-size: 3.5rem; opacity: 0.3; }
+.vacio-texto { color: var(--texto-dim); font-size: 0.9rem; line-height: 1.8; }
+
+/* ── Lista de tareas ──────────────────────────────────── */
+.lista-tareas {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 10px;
+}
+
+/* ── Tarjeta individual ──────────────────────────────── */
+.tarea-card {
+  background: var(--bg-card);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 1rem 1.25rem;
+  display: flex; align-items: flex-start; gap: 1rem;
+  transition: all 0.2s;
+  animation: entrar 0.3s ease-out both;
+  position: relative;
+  overflow: hidden;
+}
+@keyframes entrar {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Línea de prioridad izquierda */
+.tarea-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--teal);
+  border-radius: 3px 0 0 3px;
+}
+.tarea-card.prioridad-alta::before  { background: var(--rojo); }
+.tarea-card.prioridad-baja::before  { background: var(--verde); }
+.tarea-card.prioridad-media::before { background: var(--amarillo); }
+
+.tarea-card:hover {
+  border-color: var(--borde-hover);
+  background: var(--bg-hover);
+  transform: translateX(2px);
+}
+
+/* Tarea completada */
+.tarea-card.completada {
+  opacity: 0.5;
+  border-color: var(--borde);
+}
+.tarea-card.completada .tarea-desc {
+  text-decoration: line-through;
+  color: var(--texto-dim);
+}
+
+/* Checkbox */
+.tarea-check {
+  width: 20px; height: 20px; min-width: 20px;
+  border: 2px solid var(--borde-hover);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  margin-top: 2px;
+  background: transparent;
+}
+.tarea-check:hover { border-color: var(--teal); background: var(--teal-dim); }
+.tarea-check.marcado {
+  background: var(--verde);
+  border-color: var(--verde);
+  color: #000; font-size: 0.7rem; font-weight: 900;
+}
+
+/* Contenido */
+.tarea-contenido { flex: 1; min-width: 0; }
+
+.tarea-desc {
+  font-size: 0.9rem; font-weight: 500;
+  color: var(--texto); line-height: 1.5;
+  margin-bottom: 6px;
+  word-break: break-word;
+}
+
+.tarea-meta {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  align-items: center;
+}
+
+/* Badges de metadatos */
+.badge {
+  padding: 2px 8px; border-radius: 4px;
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.badge-prioridad-alta   { background: rgba(248,113,113,0.12); color: var(--rojo); }
+.badge-prioridad-media  { background: rgba(251,191,36,0.12);  color: var(--amarillo); }
+.badge-prioridad-baja   { background: rgba(52,211,153,0.12);  color: var(--verde); }
+.badge-fecha { background: rgba(45,212,191,0.08); color: var(--teal); }
+.badge-countdown {
+  background: rgba(248,113,113,0.12); color: var(--rojo);
+  font-variant-numeric: tabular-nums;
+}
+.badge-id { background: var(--bg); color: var(--texto-muted); border: 1px solid var(--borde); }
+
+/* Fecha de creación */
+.tarea-fecha-creacion {
+  font-size: 0.68rem; color: var(--texto-muted); margin-top: 4px;
+}
+
+/* Acciones */
+.tarea-acciones {
+  display: flex; gap: 4px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.tarea-card:hover .tarea-acciones { opacity: 1; }
+
+.btn-accion {
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--borde);
+  border-radius: 6px; cursor: pointer;
+  font-size: 0.8rem; color: var(--texto-dim);
+  transition: all 0.15s;
+}
+.btn-accion:hover { background: var(--bg-hover); border-color: var(--borde-hover); color: var(--texto); }
+.btn-accion.eliminar:hover { background: rgba(248,113,113,0.1); border-color: var(--rojo); color: var(--rojo); }
+
+/* ── Utilidades ───────────────────────────────────────── */
+.hidden { display: none !important; }
+
+/* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .layout { grid-template-columns: 1fr; }
+  .panel-form {
+    position: static; height: auto;
+    border-right: none; border-bottom: 1px solid var(--borde);
+  }
+  .topbar { padding: 0.75rem 1rem; }
+  .topbar-reloj { display: none; }
+  .panel-lista { padding: 1.2rem; }
+}
